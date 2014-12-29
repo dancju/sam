@@ -1,4 +1,4 @@
-# RegEx2DFA
+# SAM
 
 Convert any string to a suffix automaton.
 
