@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SAM</title>
+    <link rel="stylesheet" type="text/css" href="assets/main.css">
+    <link rel="stylesheet" type="text/css" href="assets/gh-fork-ribbon.css">
+    <script src="assets/jquery.min.js"></script>
+    <script src="assets/main.js"></script>
+    <script src="assets/viz.js"></script>
+    <script>
+var getParameter = function(key) {
+  key = key.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + key + "=([^&#]*)"),
+      results = regex.exec(location.search);
+  return results == null ? "" : decodeURIComponent(results[1]);
+}
+var sam = Module.cwrap('sam', 'string', ['string']);
+var s, dot, svg;
+$(function() {
+  if(getParameter('s')!='') {
+    s = getParameter('s');
+    $('#s').attr('value', s);
+    dot = sam(s);
+    svg = Viz(dot, "svg");
+    $("#dfa").html(svg);
+    $('#getDot').attr('download', 'dfa.dot');
+    $('#getDot').attr('href', "data:text/vnd.graphviz;charset=utf-8,"+dot);
+    $('#getSvg').attr('download', 'dfa.svg');
+    $('#getSvg').attr('href', "data:image/svg+xml;charset=utf-8,"+svg);
+    $('#button').css('display', 'block');
+  }
+});
+    </script>
+  </head>
+  <body>
+    <input id="s" type="text" placeHolder="String here" value="aabbabd" onKeyPress="{ if(event.keyCode===13) window.location.replace(window.location.pathname+'?s='+$('#s').val()); }"></input>
+    <div id="button">
+      <a id="getDot">DOT</a>
+      <a id="getSvg">SVG</a>
+    </div>
+    <div id="dfa">
+      ⇪ <i>input a string here and press enter.</i> ⇪
+    </div>
+    <div class="github-fork-ribbon-wrapper left-bottom">
+      <div class="github-fork-ribbon">
+        <a href="https://github.com/nerdDan/sam" target="_blank">Fork me on GitHub</a>
+      </div>
+    </div>
+  </body>
+</html>
