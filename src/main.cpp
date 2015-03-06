@@ -6,6 +6,7 @@
 using namespace std;
 
 class SAM {
+
     struct State {
         size_t id, val;
         State *pare;
@@ -16,16 +17,23 @@ class SAM {
             this->pare = NULL;
         }
     };
+
     State *last;
     vector<State*> pool;
+
     public:
+
     typedef const State* iterator;
+
     SAM() { pool.push_back(last = new State(0, 0)); }
+
     ~SAM() { for_each(pool.begin(), pool.end(), [](State *i) { delete i; }); }
+
     inline void clear() {
         for_each(pool.begin(), pool.end(), [](State *i) { delete i; });
         pool.push_back(last = new State(0, 0));
     }
+
     inline void insert(char x) {
         State *p = last, *np = new State(pool.size(), last->val+1);
         pool.push_back(last = np);
@@ -47,10 +55,12 @@ class SAM {
                 p->trans[x] = nq;
         }
     }
+
     inline string toDot() const {
         stringstream ss;
         ss << "digraph {" << endl;
         ss << "  node[shape=circle];" << endl;
+        ss << "  edge[arrowhead=vee];" << endl;
         ss << "  START[shape=point, color=white];" << endl;
         ss << "  START -> 0 [label=start];" << endl;
         for(State *i = last; i; i = i->pare)
@@ -60,10 +70,15 @@ class SAM {
                 ss << "  " << s->id << " -> " << i.second->id << " [label=\"" << i.first << "\"];" << endl;
             });
         });
+        ss << "  edge[color=indianred,arrowhead=none];" << endl;
+        for_each(pool.begin()+1, pool.end(), [&](State *s) {
+            ss << "  " << s->pare->id << " -> " << s->id << endl;
+        });
         ss << "}" << endl;
         string res(ss.str());
         return res;
     }
+
 };
 
 int main() {
@@ -76,7 +91,6 @@ int main() {
 }
 
 extern "C" {
-
     const char* sam(char* s) {
         SAM sam;
         for(char *i = s; *i; i++)

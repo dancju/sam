@@ -2,7 +2,7 @@
 
 Convert any string to a suffix automaton.
 
-You can launch this at http://danc.co/sam/ .
+You can launch this at http://nerddan.github.io/sam/ .
 
 This repository is partly built on the work of
 
