@@ -1,6 +1,6 @@
 # SAM
 
-Convert any string to a suffix automaton.
+Converting strings to pictures of suffix automaton.
 
 You can launch this at http://nerddan.github.io/sam/ .
 
