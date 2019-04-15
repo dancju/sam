@@ -1,2 +1,5 @@
-all:
-	em++ -std=c++11 src/main.cpp -o assets/main.js -s EXPORTED_FUNCTIONS="['_sam']"
+CC := /usr/lib/emscripten/em++
+CFLAGS := -std=c++14 -O3
+
+assets/main.js: src/main.cpp
+	${CC} $(CFLAGS) $^ -o $@ --bind

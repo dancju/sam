@@ -1,22 +1,14 @@
-#include<iostream>
-#include"sam.cpp"
+#include <emscripten/bind.h>
 
-using namespace std;
+#include "sam.cpp"
 
-int main() {
-    SAM sam;
-    string s;
-    cin >> s;
-    for_each(s.begin(), s.end(), [&](char i) { sam.insert(i); });
-    cout << sam.to_dot();
-    return 0;
+string str2sam_dot(const string &str) {
+  SAM sam;
+  for (auto i : str)
+    sam.insert(i);
+  return sam.to_dot();
 }
 
-extern "C" {
-    const char* sam(char* s) {
-        SAM sam;
-        for(char *i = s; *i; i++)
-            sam.insert(*i);
-        return sam.to_dot().c_str();
-    }
+EMSCRIPTEN_BINDINGS(my_module) {
+  emscripten::function("str2sam_dot", &str2sam_dot);
 }

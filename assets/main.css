@@ -1,6 +1,6 @@
 body { margin: 0; }
 
-#s {
+#str {
   border: none;
   border-bottom: 1px solid indianred;
   color: indianred;
@@ -12,7 +12,7 @@ body { margin: 0; }
   width: 100%;
 }
 
-#s:focus {
+#str:focus {
   border-bottom: 1px solid indianred;
   box-shadow: 0 5px 5px -5px indianred;
   outline-style: none;
